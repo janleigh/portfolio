@@ -1,0 +1,12 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"printWidth": 80,
+	"bracketSameLine": true,
+	"semi": true,
+	"useTabs": true,
+	"sortTailwindcss": {
+		"stylesheet": "./src/index.css",
+		"functions": ["clsx", "cn"],
+		"preserveWhitespace": true
+	}
+}

@@ -1,0 +1,80 @@
+.bongo-cat-wrapper {
+	--bg: #151a1c;
+	--green: #96d6b0;
+	--pink: #cb92f2;
+	--blue: #7ba5dd;
+	--orange: #ffb29b;
+	--cyan: #7fc8db;
+
+	height: 100vh;
+	width: 100vw;
+	background: var(--bg);
+	display: flex;
+	place-content: center;
+	align-items: flex-end;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+}
+
+.bongo-cat-wrapper .container {
+	width: 80vw;
+	height: 80vh;
+}
+
+.bongo-cat-wrapper .container svg {
+	height: 100%;
+	width: 100%;
+	overflow: visible;
+}
+
+#bongo-cat {
+	fill: var(--bg);
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 4;
+}
+
+#bongo-cat .laptop-cover,
+#bongo-cat .headphone .band {
+	fill: none;
+}
+
+#bongo-cat .paw,
+#bongo-cat .head {
+	stroke: var(--orange);
+}
+
+#bongo-cat .laptop-keyboard {
+	stroke-width: 2;
+}
+
+#bongo-cat .terminal-code {
+	stroke-width: 5;
+}
+
+#bongo-cat .music .note,
+#bongo-cat .laptop-base,
+#bongo-cat .laptop-cover,
+#bongo-cat .paw .pads {
+	stroke: var(--pink);
+}
+
+#bongo-cat .table line,
+#bongo-cat .headphone .band,
+#bongo-cat .headphone .speaker path:nth-child(3) {
+	stroke: var(--green);
+}
+
+#bongo-cat .terminal-frame,
+#bongo-cat .laptop-keyboard,
+#bongo-cat .headphone .speaker path:nth-child(2) {
+	stroke: var(--blue);
+}
+
+#bongo-cat .terminal-code,
+#bongo-cat .headphone .speaker path:first-child {
+	stroke: var(--cyan);
+}

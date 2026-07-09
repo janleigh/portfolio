@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Pixel&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import "tailwindcss";
+
+@theme {
+	--color-primary-bg: #0b0f10;
+	--color-primary-fg: #c5c8c9;
+
+	/* I miss my unnamed theme */
+	--color-normal-black: #131718;
+	--color-normal-red: #df5b61;
+	--color-normal-green: #87c7a1;
+	--color-normal-yellow: #de8f78;
+	--color-normal-blue: #6791c9;
+	--color-normal-magenta: #bc83e3;
+	--color-normal-cyan: #70b9cc;
+	--color-normal-white: #c4c4c4;
+
+	--color-bright-black: #151a1c;
+	--color-bright-red: #ee6a70;
+	--color-bright-green: #96d6b0;
+	--color-bright-yellow: #ffb29b;
+	--color-bright-blue: #7ba5dd;
+	--color-bright-magenta: #cb92f2;
+	--color-bright-cyan: #7fc8db;
+	--color-bright-white: #cccccc;
+
+	--font-body-base: Inter, sans-serif;
+	--font-geist-pixel: "Geist Pixel", sans-serif;
+	--font-display-xl: "Plus Jakarta Sans", sans-serif;
+	--font-label-md: "JetBrains Mono", monospace;
+	--font-headline-lg: "Plus Jakarta Sans", sans-serif;
+	--font-headline-lg-mobile: "Plus Jakarta Sans", sans-serif;
+	--font-caption-sm: Inter, sans-serif;
+
+	--radius: 0.125rem;
+	--radius-lg: 0.25rem;
+	--radius-xl: 0.5rem;
+	--radius-full: 0.75rem;
+
+	--spacing-margin-mobile: 20px;
+	--spacing-base: 8px;
+	--spacing-margin-desktop: 64px;
+	--spacing-gutter: 24px;
+	--spacing-section-gap: 120px;
+
+	--text-body-base: 16px;
+	--text-body-base--line-height: 28px;
+	--text-body-base--letter-spacing: 0.01em;
+	--text-body-base--font-weight: 400;
+
+	--text-display-xl: 64px;
+	--text-display-xl--line-height: 72px;
+	--text-display-xl--letter-spacing: -0.02em;
+	--text-display-xl--font-weight: 700;
+
+	--text-label-md: 14px;
+	--text-label-md--line-height: 20px;
+	--text-label-md--letter-spacing: 0.05em;
+	--text-label-md--font-weight: 500;
+
+	--text-headline-lg: 32px;
+	--text-headline-lg--line-height: 40px;
+	--text-headline-lg--letter-spacing: -0.01em;
+	--text-headline-lg--font-weight: 700;
+
+	--text-headline-lg-mobile: 28px;
+	--text-headline-lg-mobile--line-height: 36px;
+	--text-headline-lg-mobile--letter-spacing: -0.01em;
+	--text-headline-lg-mobile--font-weight: 700;
+
+	--text-caption-sm: 12px;
+	--text-caption-sm--line-height: 16px;
+	--text-caption-sm--letter-spacing: 0.02em;
+	--text-caption-sm--font-weight: 400;
+}
+
+#root {
+	font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+#reason {
+	font-style: italic;
+}
+
+#returnHome {
+	font-family: "JetBrains Mono", monospace;
+	text-transform: uppercase;
+}
+
+svg:hover path {
+	cursor: pointer;
+	fill: #7fc8db;
+}
+
+/* parallax bg */
+.bg-grid-pattern {
+	background-image:
+		linear-gradient(to right, rgba(66, 71, 79, 0.1) 1px, transparent 1px),
+		linear-gradient(to bottom, rgba(66, 71, 79, 0.1) 1px, transparent 1px);
+	background-size: 40px 40px;
+}
+
+/* perspective wrapper */
+.parallax-wrapper {
+	perspective: 1000px;
+}
+.parallax-card {
+	transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transform-style: preserve-3d;
+}
+.parallax-wrapper:hover .parallax-card {
+	transform: rotateX(2deg) rotateY(-2deg) translateY(-5px);
+}
+.parallax-element {
+	transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.parallax-wrapper:hover .parallax-element {
+	transform: translateZ(40px);
+}
