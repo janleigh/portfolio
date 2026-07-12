@@ -63,19 +63,19 @@ const STACK_CATEGORIES = [
 function Stack() {
 	return (
 		<div id="stack-page" className="flex w-full flex-1 flex-col">
-			<div className="mt-24 flex w-full flex-1 flex-col items-center px-margin-mobile md:px-margin-desktop">
+			<div className="mt-24 flex w-full flex-1 flex-col items-center px-5 md:px-16">
 				<div className="w-full max-w-6xl">
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.1 }}
 						className="mb-16">
-						<h1 className="font-display-xl text-[40px] tracking-tighter text-primary-fg md:text-display-xl">
+						<h1 className="font-heading text-[40px] tracking-tighter text-primary-fg md:text-h1">
 							TECH STACK.
 						</h1>
 						<div className="mt-4 flex items-center gap-4">
 							<div className="h-px w-8 bg-bright-cyan"></div>
-							<p className="text-secondary font-label-md tracking-widest text-bright-cyan uppercase">
+							<p className="text-secondary font-mono tracking-widest text-bright-cyan uppercase">
 								TOOLS & TECHNOLOGIES
 							</p>
 						</div>
@@ -89,7 +89,7 @@ function Stack() {
 								whileInView={{ opacity: 1, y: 0 }}
 								viewport={{ once: true, margin: "-100px" }}
 								transition={{ duration: 0.5, delay: categoryIdx * 0.1 }}>
-								<h2 className="mb-6 border-b border-[#42474f]/50 pb-2 font-headline-lg-mobile text-[24px] text-primary-fg">
+								<h2 className="mb-6 border-b border-[#42474f]/50 pb-2 font-heading text-[24px] text-primary-fg">
 									{category.title}
 								</h2>
 								<motion.div
@@ -118,7 +118,7 @@ function Stack() {
 												alt={`${tech.name} logo`}
 												className="h-12 w-12 object-contain drop-shadow-md filter transition-transform duration-300 group-hover:scale-110"
 											/>
-											<h3 className="text-center font-label-md text-[14px] text-primary-fg transition-colors group-hover:text-bright-cyan">
+											<h3 className="text-center font-mono text-[14px] text-primary-fg transition-colors group-hover:text-bright-cyan">
 												{tech.name}
 											</h3>
 										</motion.div>

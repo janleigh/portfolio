@@ -8,7 +8,7 @@ function Navbar() {
 			style={{ zIndex: "100" }}>
 			<div className="flex justify-start lg:justify-self-start">
 				<Link to="/">
-					<span className="ml-4 py-4 font-geist-pixel text-primary-fg">
+					<span className="ml-4 py-4 font-pixel text-primary-fg">
 						janleigh<span className="text-bright-cyan">.is-a.dev</span>
 					</span>
 				</Link>

@@ -28,7 +28,7 @@ function NotFound() {
 					<button
 						id="returnHome"
 						className="text-on-primary hover:bg-primary/90 hover:border-primary
-                        hover:text-primary cursor-pointer rounded border border-transparent bg-bright-cyan px-8 py-3 font-label-md text-label-md transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(103,145,201,0.12)] active:translate-y-0 active:scale-95">
+                        hover:text-primary cursor-pointer rounded border border-transparent bg-bright-cyan px-8 py-3 font-mono text-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(103,145,201,0.12)] active:translate-y-0 active:scale-95">
 						Return Home
 					</button>
 				</Link>

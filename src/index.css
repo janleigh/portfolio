@@ -24,54 +24,40 @@
 	--color-bright-cyan: #7fc8db;
 	--color-bright-white: #cccccc;
 
-	--font-body-base: Inter, sans-serif;
-	--font-geist-pixel: "Geist Pixel", sans-serif;
-	--font-display-xl: "Plus Jakarta Sans", sans-serif;
-	--font-label-md: "JetBrains Mono", monospace;
-	--font-headline-lg: "Plus Jakarta Sans", sans-serif;
-	--font-headline-lg-mobile: "Plus Jakarta Sans", sans-serif;
-	--font-caption-sm: Inter, sans-serif;
+	--font-sans: Inter, sans-serif;
+	--font-pixel: "Geist Pixel", sans-serif;
+	--font-heading: "Plus Jakarta Sans", sans-serif;
+	--font-mono: "JetBrains Mono", monospace;
 
 	--radius: 0.125rem;
 	--radius-lg: 0.25rem;
 	--radius-xl: 0.5rem;
 	--radius-full: 0.75rem;
 
-	--spacing-margin-mobile: 20px;
-	--spacing-base: 8px;
-	--spacing-margin-desktop: 64px;
-	--spacing-gutter: 24px;
-	--spacing-section-gap: 120px;
+	--text-base: 16px;
+	--text-base--line-height: 28px;
+	--text-base--letter-spacing: 0.01em;
+	--text-base--font-weight: 400;
 
-	--text-body-base: 16px;
-	--text-body-base--line-height: 28px;
-	--text-body-base--letter-spacing: 0.01em;
-	--text-body-base--font-weight: 400;
+	--text-h1: 64px;
+	--text-h1--line-height: 72px;
+	--text-h1--letter-spacing: -0.02em;
+	--text-h1--font-weight: 700;
 
-	--text-display-xl: 64px;
-	--text-display-xl--line-height: 72px;
-	--text-display-xl--letter-spacing: -0.02em;
-	--text-display-xl--font-weight: 700;
+	--text-sm: 14px;
+	--text-sm--line-height: 20px;
+	--text-sm--letter-spacing: 0.05em;
+	--text-sm--font-weight: 500;
 
-	--text-label-md: 14px;
-	--text-label-md--line-height: 20px;
-	--text-label-md--letter-spacing: 0.05em;
-	--text-label-md--font-weight: 500;
+	--text-h2: 32px;
+	--text-h2--line-height: 40px;
+	--text-h2--letter-spacing: -0.01em;
+	--text-h2--font-weight: 700;
 
-	--text-headline-lg: 32px;
-	--text-headline-lg--line-height: 40px;
-	--text-headline-lg--letter-spacing: -0.01em;
-	--text-headline-lg--font-weight: 700;
-
-	--text-headline-lg-mobile: 28px;
-	--text-headline-lg-mobile--line-height: 36px;
-	--text-headline-lg-mobile--letter-spacing: -0.01em;
-	--text-headline-lg-mobile--font-weight: 700;
-
-	--text-caption-sm: 12px;
-	--text-caption-sm--line-height: 16px;
-	--text-caption-sm--letter-spacing: 0.02em;
-	--text-caption-sm--font-weight: 400;
+	--text-xs: 12px;
+	--text-xs--line-height: 16px;
+	--text-xs--letter-spacing: 0.02em;
+	--text-xs--font-weight: 400;
 }
 
 #root {
