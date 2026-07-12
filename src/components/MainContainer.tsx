@@ -305,7 +305,7 @@ function MainContainer() {
 					className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-60">
 					<div ref={mountRef} style={{ width: "100%", height: "100%" }}></div>
 				</motion.div>
-				<div className="from-surface-container-lowest/80 absolute inset-0 z-0 bg-linear-to-r to-transparent"></div>
+				<div className="absolute inset-0 z-0 bg-linear-to-r to-transparent"></div>
 				<motion.div
 					style={{ opacity: opacityHero }}
 					className="relative z-10 mx-auto mt-16 w-full max-w-7xl px-5 md:mt-0 md:px-16">

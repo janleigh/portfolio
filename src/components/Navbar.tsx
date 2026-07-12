@@ -9,7 +9,7 @@ function Navbar() {
 	};
 
 	return (
-		<div className="relative z-100 w-full lg:fixed lg:top-0">
+		<div className="relative z-50 w-full lg:fixed lg:top-0">
 			<div
 				id="navbar"
 				className="flex w-full flex-row items-center justify-between border-b border-[#42474f] bg-normal-black px-4 md:px-8 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center">
