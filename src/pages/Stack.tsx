@@ -15,7 +15,7 @@ const STACK_CATEGORIES = [
 			{
 				name: "PHP",
 				icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
-			}
+			},
 		],
 	},
 	{
@@ -42,7 +42,10 @@ const STACK_CATEGORIES = [
 		title: "Backend & Database",
 		items: [
 			{ name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/47A248" },
-			{ name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" },
+			{
+				name: "PostgreSQL",
+				icon: "https://cdn.simpleicons.org/postgresql/4169E1",
+			},
 			{ name: "Prisma", icon: "https://cdn.simpleicons.org/prisma/white" },
 			{ name: "Drizzle", icon: "https://cdn.simpleicons.org/drizzle/C5F74F" },
 		],
@@ -80,7 +83,6 @@ function Stack() {
 							</p>
 						</div>
 					</motion.div>
-
 					<div className="flex flex-col gap-12 pb-20">
 						{STACK_CATEGORIES.map((category, categoryIdx) => (
 							<motion.div

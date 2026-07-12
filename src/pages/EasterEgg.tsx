@@ -30,11 +30,11 @@ export default function EasterEgg() {
 				},
 			};
 
-			const green = "#a5ea9b";
-			const pink = "#ff61d8";
-			const blue = "#569cfa";
+			const green = "#23d18b";
+			const pink = "#ff8cc6";
+			const blue = "#3b8eea";
 			const orange = "#ffcc81";
-			const cyan = "#7ed1e2";
+			const cyan = "#7fc8db";
 
 			gsap.set(music.note, { scale: 0, autoAlpha: 1 });
 
@@ -80,7 +80,7 @@ export default function EasterEgg() {
 			const notesG3 = noteEls;
 
 			const colorizer = gsap.utils.random(
-				[green, pink, blue, orange, cyan, "#a3a4ec", "#67b5c0", "#fd7c6e"],
+				[green, pink, blue, orange, cyan, "#cbaeff", "#29b8db", "#f14c4c"],
 				true,
 			);
 			const rotator = gsap.utils.random(-50, 50, 1, true);

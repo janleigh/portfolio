@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const SHOWCASE_PROJECTS = ["dotfiles", "facecrack", "trace.moe.ts"];
+const SHOWCASE_PROJECTS = [
+	"dotfiles",
+	"facecrack",
+	"trace.moe.ts",
+	"portfolio",
+];
 
 interface Repo {
 	id: number;
@@ -128,7 +133,6 @@ function Projects() {
 												<div className="absolute inset-0 bg-linear-to-t from-bright-black/90 via-bright-black/20 to-transparent"></div>
 											</div>
 										) : null}
-
 										<div className="flex flex-1 flex-col p-6">
 											<div className="mb-4 flex items-start justify-between">
 												<h3 className="font-heading text-[20px] text-bright-cyan transition-colors group-hover:text-primary-fg">
@@ -144,7 +148,6 @@ function Projects() {
 											<p className="mb-6 line-clamp-3 font-sans text-[14px] leading-relaxed text-primary-fg/70">
 												{repo.description || "No description available."}
 											</p>
-
 											<div className="mt-auto flex items-center gap-4 border-t border-[#42474f]/30 pt-4">
 												{repo.language && (
 													<div className="flex items-center gap-1.5">

@@ -18,7 +18,9 @@ function NotFound() {
 			id="404"
 			className="bg-grid-pattern flex h-screen w-screen justify-center bg-primary-bg px-8 py-8">
 			<div className="flex flex-col items-center justify-center">
-				<span className="text-6xl text-primary-fg">\(o_o)/</span>
+				<span className="not-found-mascot text-6xl text-primary-fg">
+					\(o_o)/
+				</span>
 				<span
 					id="reason"
 					className="my-12 text-center text-3xl text-primary-fg">
@@ -28,7 +30,7 @@ function NotFound() {
 					<button
 						id="returnHome"
 						className="text-on-primary hover:bg-primary/90 hover:border-primary
-                        hover:text-primary cursor-pointer rounded border border-transparent bg-bright-cyan px-8 py-3 font-mono text-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(103,145,201,0.12)] active:translate-y-0 active:scale-95">
+                        hover:text-primary cursor-pointer rounded border border-transparent bg-bright-cyan px-8 py-3 font-mono text-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(127,200,219,0.12)] active:translate-y-0 active:scale-95">
 						Return Home
 					</button>
 				</Link>

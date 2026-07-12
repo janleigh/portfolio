@@ -2,11 +2,11 @@
 @import "tailwindcss";
 
 @theme {
-	--color-primary-bg: #0b0f10;
-	--color-primary-fg: #c5c8c9;
+	--color-primary-bg: #0c0d0e;
+	--color-primary-fg: #c0ccc0;
 
 	/* I miss my unnamed theme */
-	--color-normal-black: #131718;
+	/* --color-normal-black: #131718;
 	--color-normal-red: #df5b61;
 	--color-normal-green: #87c7a1;
 	--color-normal-yellow: #de8f78;
@@ -22,7 +22,31 @@
 	--color-bright-blue: #7ba5dd;
 	--color-bright-magenta: #cb92f2;
 	--color-bright-cyan: #7fc8db;
-	--color-bright-white: #cccccc;
+	--color-bright-white: #cccccc; */
+
+	/* EXPO THEME */
+	--color-normal-black: #0c0d0e;
+	--color-normal-red: #cd3131;
+	--color-normal-green: #0dbc79;
+	--color-normal-yellow: #e5e510;
+	--color-normal-blue: #2472c8;
+	--color-normal-magenta: #bc3fbc;
+	--color-normal-cyan: #11a8cd;
+	--color-normal-white: #e5e5e5;
+
+	--color-bright-black: #111113;
+	--color-bright-red: #f14c4c;
+	--color-bright-green: #23d18b;
+	--color-bright-yellow: #f5f543;
+	--color-bright-blue: #3b8eea;
+	--color-bright-magenta: #d670d6;
+	--color-bright-cyan: #29b8db;
+	--color-bright-white: #e5e5e5;
+
+	--color-preferred-blue: #7fc8db;
+	--color-preferred-purple: #cbaeff;
+	--color-preferred-pink: #ff8cc6;
+	--color-preferred-yellow: #ffe08a;
 
 	--font-sans: Inter, sans-serif;
 	--font-pixel: "Geist Pixel", sans-serif;
@@ -71,6 +95,33 @@
 #returnHome {
 	font-family: "JetBrains Mono", monospace;
 	text-transform: uppercase;
+}
+
+.not-found-mascot {
+	display: inline-block;
+	transform-origin: center 72%;
+	animation: not-found-float 2.8s ease-in-out infinite;
+	will-change: transform, filter;
+}
+
+@keyframes not-found-float {
+	0%,
+	100% {
+		transform: translateY(0) rotate(0deg) scale(1);
+		filter: drop-shadow(0 0 0 rgba(127, 200, 219, 0));
+	}
+	25% {
+		transform: translateY(-6px) rotate(-2deg) scale(1.01);
+		filter: drop-shadow(0 6px 14px rgba(127, 200, 219, 0.12));
+	}
+	50% {
+		transform: translateY(-12px) rotate(0deg) scale(1.03);
+		filter: drop-shadow(0 10px 20px rgba(127, 200, 219, 0.18));
+	}
+	75% {
+		transform: translateY(-6px) rotate(2deg) scale(1.01);
+		filter: drop-shadow(0 6px 14px rgba(127, 200, 219, 0.12));
+	}
 }
 
 svg:hover path {

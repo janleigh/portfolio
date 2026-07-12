@@ -1,11 +1,116 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
 
-// Separated to make maintaining of 3D background easier
+const TerminalAnimation = () => {
+	const [text, setText] = useState("");
+	const codeLines = [
+		"janleigh@portfolio ~$ whoami",
+		"janleigh",
+		"janleigh@portfolio ~$ ./skills --list",
+		"> [React, Node.js, TypeScript, Next.js, Python]",
+		"janleigh@portfolio ~$ status",
+		"> Full-stack developer. Ready for new challenges.",
+		"janleigh@portfolio ~$",
+	];
+	const fullText = codeLines.join("\n");
+
+	useEffect(() => {
+		let currentIndex = 0;
+		const interval = setInterval(() => {
+			if (currentIndex <= fullText.length) {
+				setText(fullText.slice(0, currentIndex));
+				currentIndex++;
+			} else {
+				clearInterval(interval);
+			}
+		}, 30);
+		return () => clearInterval(interval);
+	}, [fullText]);
+
+	return (
+		<motion.div
+			initial={{ opacity: 0, scale: 0.95 }}
+			animate={{ opacity: 1, scale: 1 }}
+			transition={{ duration: 0.8, delay: 0.5 }}
+			className="relative w-full max-w-lg overflow-hidden rounded-xl border border-[#42474f] shadow-2xl"
+			style={{ backgroundColor: "#0C0D0E" }}>
+			<div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent to-primary-fg/5" />
+			<div className="relative z-10 flex h-10 w-full items-center gap-2 border-b border-[#42474f] bg-[#1a1b1c] px-4">
+				<div className="h-3 w-3 rounded-full bg-bright-red"></div>
+				<div className="h-3 w-3 rounded-full bg-bright-yellow"></div>
+				<div className="h-3 w-3 rounded-full bg-bright-green"></div>
+				<div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-[#a0a0a0]">
+					janleigh@portfolio : ~
+				</div>
+			</div>
+			<div className="relative z-10 flex h-64 flex-col p-5 font-mono text-sm leading-relaxed sm:text-base">
+				{text.split("\n").map((line, i) => {
+					if (line.startsWith("janleigh@portfolio")) {
+						const prompt = "janleigh@portfolio";
+						const symbol = " ~$";
+						const promptFull = prompt + symbol;
+						if (line.length <= prompt.length) {
+							return (
+								<div key={i}>
+									<span style={{ color: "#23d18b" }}>{line}</span>
+								</div>
+							);
+						} else if (line.length <= promptFull.length) {
+							return (
+								<div key={i}>
+									<span style={{ color: "#23d18b" }}>{prompt}</span>
+									<span style={{ color: "#C0CCC0" }}>
+										{line.slice(prompt.length)}
+									</span>
+								</div>
+							);
+						} else {
+							const command = line.slice(promptFull.length);
+							return (
+								<div key={i}>
+									<span style={{ color: "#23d18b" }}>{prompt}</span>
+									<span style={{ color: "#C0CCC0" }}>{symbol}</span>
+									<span style={{ color: "#F9F1A5" }}>{command}</span>
+									{i === text.split("\n").length - 1 &&
+										text.length !== fullText.length && (
+											<span className="ml-1 inline-block h-4 w-2 animate-pulse bg-primary-fg align-middle" />
+										)}
+									{i === text.split("\n").length - 1 &&
+										text.length === fullText.length && (
+											<span className="ml-1 inline-block h-4 w-2 animate-pulse bg-primary-fg align-middle" />
+										)}
+								</div>
+							);
+						}
+					} else if (line.startsWith(">")) {
+						return (
+							<div key={i}>
+								<span style={{ color: "#61D6D6" }}>{line}</span>
+							</div>
+						);
+					}
+					return (
+						<div key={i}>
+							<span style={{ color: "#C0CCC0" }}>{line}</span>
+						</div>
+					);
+				})}
+			</div>
+		</motion.div>
+	);
+};
+
 function MainContainer() {
 	const mountRef = useRef<HTMLDivElement>(null);
+	const { scrollYProgress } = useScroll();
+
+	// Parallax transforms
+	const yHeroText = useTransform(scrollYProgress, [0, 1], [0, 300]);
+	const yHeroVisual = useTransform(scrollYProgress, [0, 1], [0, 150]);
+	const yBackground = useTransform(scrollYProgress, [0, 1], [0, 400]);
+	const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
 	const getYearOfExperience = () => {
 		const today = new Date();
@@ -16,7 +121,7 @@ function MainContainer() {
 			years--;
 		}
 		return years;
-	}
+	};
 
 	useEffect(() => {
 		const container = mountRef.current;
@@ -38,50 +143,65 @@ function MainContainer() {
 		const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 		scene.add(ambientLight);
 
-		const pointLight = new THREE.PointLight(0x6791c9, 2);
+		const pointLight = new THREE.PointLight(0x7fc8db, 2);
 		pointLight.position.set(5, 5, 5);
 		scene.add(pointLight);
 
-		// --- OBJECTS ---
+		// --- NETWORK GRAPH (Nodes and Connections) ---
 		const group = new THREE.Group();
 		scene.add(group);
 
-		const material = new THREE.MeshPhongMaterial({
-			color: 0x6791c9,
-			wireframe: true,
+		const particleCount = 120;
+		const particlesGeometry = new THREE.BufferGeometry();
+		const particlePositions = new Float32Array(particleCount * 3);
+		const particleVelocities: THREE.Vector3[] = [];
+
+		for (let i = 0; i < particleCount; i++) {
+			particlePositions[i * 3] = (Math.random() - 0.5) * 12;
+			particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+			particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+
+			particleVelocities.push(
+				new THREE.Vector3(
+					(Math.random() - 0.5) * 0.015,
+					(Math.random() - 0.5) * 0.015,
+					(Math.random() - 0.5) * 0.015,
+				),
+			);
+		}
+
+		particlesGeometry.setAttribute(
+			"position",
+			new THREE.BufferAttribute(particlePositions, 3),
+		);
+
+		const particleMaterial = new THREE.PointsMaterial({
+			color: 0x7fc8db,
+			size: 0.06,
 			transparent: true,
 			opacity: 0.8,
+			sizeAttenuation: true,
 		});
 
-		const geometries = [
-			new THREE.IcosahedronGeometry(1, 0),
-			new THREE.TorusGeometry(0.8, 0.2, 16, 100),
-			new THREE.OctahedronGeometry(0.7, 0),
-			new THREE.TetrahedronGeometry(0.5, 0),
-			new THREE.SphereGeometry(0.4, 32, 32),
-		];
+		const pointCloud = new THREE.Points(particlesGeometry, particleMaterial);
+		group.add(pointCloud);
 
-		for (let i = 0; i < 15; i++) {
-			const geo = geometries[Math.floor(Math.random() * geometries.length)];
-			const mesh = new THREE.Mesh(geo, material);
+		const linesMaterial = new THREE.LineBasicMaterial({
+			color: 0x7fc8db,
+			transparent: true,
+			opacity: 0.15,
+		});
 
-			mesh.position.set(
-				(Math.random() - 0.5) * 10,
-				(Math.random() - 0.5) * 10,
-				(Math.random() - 0.5) * 10,
-			);
-
-			mesh.rotation.set(
-				Math.random() * Math.PI,
-				Math.random() * Math.PI,
-				Math.random() * Math.PI,
-			);
-
-			const scale = Math.random() * 0.5 + 0.2;
-			mesh.scale.set(scale, scale, scale);
-
-			group.add(mesh);
-		}
+		// max connections can be n * (n-1) / 2
+		const maxLines = (particleCount * (particleCount - 1)) / 2;
+		const linePositions = new Float32Array(maxLines * 6); // 2 vertices per line, 3 coords per vertex
+		const lineGeometry = new THREE.BufferGeometry();
+		lineGeometry.setAttribute(
+			"position",
+			new THREE.BufferAttribute(linePositions, 3),
+		);
+		const linesMesh = new THREE.LineSegments(lineGeometry, linesMaterial);
+		group.add(linesMesh);
 
 		let mouseX = 0;
 		let mouseY = 0;
@@ -107,18 +227,54 @@ function MainContainer() {
 		const animate = () => {
 			animationFrameId = requestAnimationFrame(animate);
 
-			group.rotation.y += 0.002;
-			group.rotation.x += 0.001;
+			// Rotate the entire group slowly
+			group.rotation.y += 0.001;
+			group.rotation.x += 0.0005;
 
-			// Smooth mouse parallax
-			group.position.x += (mouseX * 2 - group.position.x) * 0.05;
-			group.position.y += (-mouseY * 2 - group.position.y) * 0.05;
+			// Smooth mouse parallax for the group
+			group.position.x += (mouseX * 1.5 - group.position.x) * 0.05;
+			group.position.y += (-mouseY * 1.5 - group.position.y) * 0.05;
 
-			// Individual mesh rotation
-			group.children.forEach((mesh) => {
-				mesh.rotation.x += 0.01;
-				mesh.rotation.y += 0.01;
-			});
+			// Update particle positions
+			const positions = pointCloud.geometry.attributes.position
+				.array as Float32Array;
+
+			for (let i = 0; i < particleCount; i++) {
+				positions[i * 3] += particleVelocities[i].x;
+				positions[i * 3 + 1] += particleVelocities[i].y;
+				positions[i * 3 + 2] += particleVelocities[i].z;
+
+				// Boundary check to keep particles in a box
+				if (Math.abs(positions[i * 3]) > 6) particleVelocities[i].x *= -1;
+				if (Math.abs(positions[i * 3 + 1]) > 6) particleVelocities[i].y *= -1;
+				if (Math.abs(positions[i * 3 + 2]) > 5) particleVelocities[i].z *= -1;
+			}
+			pointCloud.geometry.attributes.position.needsUpdate = true;
+
+			// Update lines between nearby particles
+			let lineIndex = 0;
+			for (let i = 0; i < particleCount; i++) {
+				for (let j = i + 1; j < particleCount; j++) {
+					// yo im not explaining all this
+					const dx = positions[i * 3] - positions[j * 3];
+					const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+					const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+					const distSq = dx * dx + dy * dy + dz * dz;
+
+					// Connect if distance squared is less than a threshold
+					if (distSq < 2.5) {
+						linePositions[lineIndex++] = positions[i * 3];
+						linePositions[lineIndex++] = positions[i * 3 + 1];
+						linePositions[lineIndex++] = positions[i * 3 + 2];
+
+						linePositions[lineIndex++] = positions[j * 3];
+						linePositions[lineIndex++] = positions[j * 3 + 1];
+						linePositions[lineIndex++] = positions[j * 3 + 2];
+					}
+				}
+			}
+			linesMesh.geometry.setDrawRange(0, lineIndex / 3);
+			linesMesh.geometry.attributes.position.needsUpdate = true;
 
 			renderer.render(scene, camera);
 		};
@@ -134,86 +290,98 @@ function MainContainer() {
 				container.removeChild(renderer.domElement);
 			}
 
-			geometries.forEach((geo) => geo.dispose());
-			material.dispose();
+			particlesGeometry.dispose();
+			particleMaterial.dispose();
+			lineGeometry.dispose();
+			linesMaterial.dispose();
 			renderer.dispose();
 		};
 	}, []);
 	return (
 		<main id="main" className="flex w-full flex-col bg-primary-bg">
-			<section className="relative flex h-screen w-full items-center justify-start overflow-hidden">
-				<div
-					className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-60"
-					style={{ display: "block" }}>
+			<section className="relative flex min-h-screen w-full items-center justify-start overflow-hidden">
+				<motion.div
+					style={{ y: yBackground }}
+					className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-60">
 					<div ref={mountRef} style={{ width: "100%", height: "100%" }}></div>
-				</div>
+				</motion.div>
 				<div className="from-surface-container-lowest/80 absolute inset-0 z-0 bg-linear-to-r to-transparent"></div>
-				<div className="relative z-10 mx-auto mt-16 w-full max-w-360 px-5 md:mt-0 md:px-16">
-					<motion.div
-						initial="hidden"
-						animate="show"
-						variants={{
-							hidden: { opacity: 0 },
-							show: {
-								opacity: 1,
-								transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-							},
-						}}
-						className="flex max-w-4xl flex-col items-start">
-						<motion.h1
-							variants={{
-								hidden: { opacity: 0, y: 20 },
-								show: { opacity: 1, y: 0 },
-							}}
-							className="mb-4 font-mono text-[48px] tracking-tighter text-primary-fg md:text-h1">
-							JAN LEIGH
-						</motion.h1>
+				<motion.div
+					style={{ opacity: opacityHero }}
+					className="relative z-10 mx-auto mt-16 w-full max-w-7xl px-5 md:mt-0 md:px-16">
+					<div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
 						<motion.div
+							style={{ y: yHeroText }}
+							initial="hidden"
+							animate="show"
 							variants={{
-								hidden: { opacity: 0, y: 20 },
-								show: { opacity: 1, y: 0 },
+								hidden: { opacity: 0 },
+								show: {
+									opacity: 1,
+									transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+								},
 							}}
-							className="flex items-center gap-4 mb-2">
-							<p className="text-secondary font-mono italic tracking-widest text-bright-yellow uppercase">
-								"I build things for the web."
-							</p>
+							className="flex flex-col items-start">
+							<motion.h1
+								variants={{
+									hidden: { opacity: 0, y: 20 },
+									show: { opacity: 1, y: 0 },
+								}}
+								className="mb-4 font-mono text-[48px] tracking-tighter text-primary-fg md:text-h1">
+								JAN LEIGH
+							</motion.h1>
+							<motion.div
+								variants={{
+									hidden: { opacity: 0, y: 20 },
+									show: { opacity: 1, y: 0 },
+								}}
+								className="mb-2 flex items-center gap-4">
+								<p className="text-secondary font-mono tracking-widest text-preferred-purple uppercase italic">
+									"I build things for the web."
+								</p>
+							</motion.div>
+							<motion.div
+								variants={{
+									hidden: { opacity: 0, y: 20 },
+									show: { opacity: 1, y: 0 },
+								}}
+								className="flex items-center gap-4">
+								<div className="h-px w-8 bg-bright-cyan"></div>
+								<p className="text-secondary font-mono tracking-widest text-bright-cyan uppercase">
+									CS Undergraduate • Full-Stack Developer • Philippines
+								</p>
+							</motion.div>
+							<motion.div
+								variants={{
+									hidden: { opacity: 0, y: 20 },
+									show: { opacity: 1, y: 0 },
+								}}
+								className="mt-12 flex flex-wrap gap-4">
+								<Link to="/projects">
+									<motion.button
+										whileHover={{ y: -5, scale: 1.05 }}
+										whileTap={{ scale: 0.95 }}
+										className="cursor-pointer rounded border border-transparent bg-linear-to-r from-preferred-pink to-preferred-yellow px-8 py-3 font-mono text-normal-black transition-colors duration-300 hover:shadow-[0_12px_30px_rgba(127,200,219,0.35)] hover:shadow-bright-cyan/20">
+										[ VIEW MY WORK ]
+									</motion.button>
+								</Link>
+								<Link to="/contact">
+									<motion.button
+										whileHover={{ y: -5, scale: 1.05 }}
+										whileTap={{ scale: 0.95 }}
+										className="cursor-pointer rounded border border-[#42474f] bg-transparent px-8 py-3 font-mono text-primary-fg transition-colors duration-300 hover:shadow-[0_12px_30px_rgba(127,200,219,0.12)]">
+										CONTACT ME
+									</motion.button>
+								</Link>
+							</motion.div>
 						</motion.div>
 						<motion.div
-							variants={{
-								hidden: { opacity: 0, y: 20 },
-								show: { opacity: 1, y: 0 },
-							}}
-							className="flex items-center gap-4">
-							<div className="h-px w-8 bg-bright-cyan"></div>
-							<p className="text-secondary font-mono tracking-widest text-bright-cyan uppercase">
-								CS Undergraduate • Full-Stack Developer • Philippines
-							</p>
+							style={{ y: yHeroVisual }}
+							className="hidden w-full justify-end lg:flex">
+							<TerminalAnimation />
 						</motion.div>
-						<motion.div
-							variants={{
-								hidden: { opacity: 0, y: 20 },
-								show: { opacity: 1, y: 0 },
-							}}
-							className="mt-12 flex gap-4">
-							<Link to="/projects">
-								<motion.button
-									whileHover={{ y: -5, scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									className="text-on-primary hover:bg-primary/90 cursor-pointer rounded border border-transparent bg-bright-cyan px-8 py-3 font-mono text-normal-black transition-colors duration-300 hover:shadow-[0_12px_30px_rgba(103,145,201,0.35)] hover:shadow-bright-cyan/20">
-									[ VIEW MY WORK ]
-								</motion.button>
-							</Link>
-							<Link to="/contact">
-								<motion.button
-									whileHover={{ y: -5, scale: 1.05 }}
-									whileTap={{ scale: 0.95 }}
-									className="text-on-surface hover:border-primary hover:text-primary cursor-pointer rounded border border-[#42474f] bg-transparent px-8 py-3 font-mono text-primary-fg transition-colors duration-300 hover:shadow-[0_12px_30px_rgba(103,145,201,0.12)]">
-									CONTACT ME
-								</motion.button>
-							</Link>
-						</motion.div>
-					</motion.div>
-				</div>
+					</div>
+				</motion.div>
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -230,7 +398,7 @@ function MainContainer() {
 						animate={{ height: 40 }}
 						transition={{ duration: 1, ease: "easeOut", delay: 1.8 }}
 						className="relative w-px origin-top overflow-hidden bg-[#42474f]">
-						<motion.div 
+						<motion.div
 							animate={{ y: ["0%", "200%", "0%"] }}
 							transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
 							className="absolute top-0 left-0 h-1/3 w-full bg-bright-blue"
@@ -246,29 +414,19 @@ function MainContainer() {
 					whileInView="show"
 					viewport={{ once: true, margin: "-100px" }}
 					variants={{
-						hidden: { opacity: 0 },
+						hidden: { opacity: 0, y: 50 },
 						show: {
 							opacity: 1,
-							transition: { staggerChildren: 0.2 },
+							y: 0,
+							transition: {
+								staggerChildren: 0.2,
+								duration: 0.6,
+								ease: "easeOut",
+							},
 						},
 					}}
 					className="relative z-10 mx-auto w-full max-w-6xl px-5 md:px-16">
 					<div className="flex flex-col items-center gap-12 lg:flex-row lg:items-start lg:gap-16">
-						{/* Avatar commented out 
-						<motion.div
-							variants={{
-								hidden: { opacity: 0, scale: 0.8 },
-								show: { opacity: 1, scale: 1 },
-							}}
-							className="group relative mx-auto shrink-0 lg:mx-0 lg:sticky lg:top-32">
-							<div className="absolute -inset-2 animate-pulse rounded-full bg-linear-to-r/shorter from-bright-cyan to-bright-blue opacity-40 blur-xl transition duration-1000 group-hover:opacity-80 group-hover:duration-200"></div>
-							<img
-								src="https://github.com/janleigh.png"
-								alt="Jan Leigh"
-								className="relative h-56 w-56 rounded-full border border-[#42474f] object-cover shadow-2xl md:h-72 md:w-72"
-							/>
-						</motion.div>
-						*/}
 						<motion.div
 							variants={{
 								hidden: { opacity: 0, x: 20 },
@@ -281,51 +439,82 @@ function MainContainer() {
 							<h2 className="mb-6 font-mono text-4xl tracking-tight text-primary-fg md:text-5xl">
 								Hey, I'm Jan Leigh.
 							</h2>
-							
+
 							<div className="flex flex-col gap-6 font-mono leading-relaxed text-bright-white/80">
-								<p className="text-xl font-medium text-bright-white md:text-2xl leading-snug">
+								<p className="text-xl leading-snug font-medium text-bright-white md:text-2xl">
 									Full-stack developer specializing in modern web applications.
 								</p>
 								<p className="text-base md:text-lg">
-									I am a Filipino college student and self-taught developer. I've been programming since 2018, and I enjoy creating intuitive web experiences, robust backend APIs, diving into open-source projects and occasionally weird side projects.
+									I am a Filipino college student and self-taught developer.
+									I've been programming since 2018, and I enjoy creating
+									intuitive web experiences, robust backend APIs, diving into
+									open-source projects and occasionally weird side projects.
 								</p>
 							</div>
 							<div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
-								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-bright-cyan/50 hover:shadow-[0_8px_30px_rgba(103,145,201,0.15)]">
-									<div className="text-bright-cyan font-bold text-3xl">{getYearOfExperience()}+</div>
-									<div className="text-bright-white/80 font-mono text-sm">Years of Experience</div>
+								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-bright-green/50 hover:shadow-[0_8px_30px_rgba(127,200,219,0.15)]">
+									<div className="text-3xl font-bold text-bright-green">
+										{getYearOfExperience()}+
+									</div>
+									<div className="font-mono text-sm text-bright-white/80">
+										Years of Experience
+									</div>
 								</div>
-								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-bright-cyan/50 hover:shadow-[0_8px_30px_rgba(103,145,201,0.15)]">
-									<div className="text-bright-cyan font-bold text-3xl">CS</div>
-									<div className="text-bright-white/80 font-mono text-sm">Undergraduate Student</div>
+								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-bright-cyan/50 hover:shadow-[0_8px_30px_rgba(127,200,219,0.15)]">
+									<div className="text-3xl font-bold text-bright-cyan">CS</div>
+									<div className="font-mono text-sm text-bright-white/80">
+										Undergraduate Student
+									</div>
 								</div>
-								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-bright-cyan/50 hover:shadow-[0_8px_30px_rgba(103,145,201,0.15)]">
-									<div className="text-bright-cyan font-bold text-3xl">OSS</div>
-									<div className="text-bright-white/80 font-mono text-sm">Active Contributor</div>
+								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-preferred-yellow/50 hover:shadow-[0_8px_30px_rgba(127,200,219,0.15)]">
+									<div className="text-3xl font-bold text-preferred-yellow">
+										OSS
+									</div>
+									<div className="font-mono text-sm text-bright-white/80">
+										Active Contributor
+									</div>
 								</div>
 							</div>
 							<div className="mt-16 w-full text-left">
-								<h3 className="mb-8 font-mono text-2xl tracking-tight text-primary-fg">Experience</h3>
+								<h3 className="mb-8 font-mono text-2xl tracking-tight text-primary-fg">
+									Experience
+								</h3>
 								<div className="ml-2 flex flex-col gap-8 border-l border-[#42474f]/50 pl-6">
 									<div className="relative">
-										<div className="absolute -left-7.5 top-1.5 h-3 w-3 rounded-full bg-bright-cyan"></div>
+										<div className="absolute top-1.5 -left-7.5 h-3 w-3 rounded-full bg-bright-green"></div>
 										<div className="flex flex-col gap-1">
-											<h4 className="font-mono text-xl text-bright-white">Mobile App Developer</h4>
-											<span className="font-mono text-base text-bright-white/80">Thesis Commission (malinaonow) • Freelance</span>
-											<span className="font-mono text-sm text-bright-cyan mb-2">Jul 2025 - Oct 2025 • Remote</span>
-											<p className="text-bright-white/70 text-base leading-relaxed">
-												Developed "malinaonow", a fully functional mobile application using Expo and React Native, commissioned as a university thesis project.
+											<h4 className="font-mono text-xl text-bright-white">
+												Mobile App Developer
+											</h4>
+											<span className="font-mono text-base text-bright-white/80">
+												Thesis Commission (malinaonow) • Freelance
+											</span>
+											<span className="mb-2 font-mono text-sm text-bright-cyan">
+												Jul 2025 - Oct 2025 • Remote
+											</span>
+											<p className="text-base leading-relaxed text-bright-white/70">
+												Developed "malinaonow", a fully functional mobile
+												application using Expo and React Native, commissioned as
+												a university thesis project.
 											</p>
 										</div>
 									</div>
 									<div className="relative">
-										<div className="absolute -left-7.5 top-1.5 h-3 w-3 rounded-full bg-[#42474f]"></div>
+										<div className="absolute top-1.5 -left-7.5 h-3 w-3 rounded-full bg-[#42474f]"></div>
 										<div className="flex flex-col gap-1">
-											<h4 className="font-mono text-xl text-bright-white">Website Developer</h4>
-											<span className="font-mono text-base text-bright-white/80">Salazar Gents Salon • Freelance</span>
-											<span className="font-mono text-sm text-bright-cyan mb-2">Nov 2023 - 1 mo • United Arab Emirates (Remote)</span>
-											<p className="text-bright-white/70 text-base leading-relaxed">
-												Designed and developed a modern web presence for a gents salon, enhancing their digital footprint and client outreach.
+											<h4 className="font-mono text-xl text-bright-white">
+												Website Developer
+											</h4>
+											<span className="font-mono text-base text-bright-white/80">
+												Salazar Gents Salon • Freelance
+											</span>
+											<span className="mb-2 font-mono text-sm text-bright-cyan">
+												Nov 2023 - 1 mo • United Arab Emirates (Remote)
+											</span>
+											<p className="text-base leading-relaxed text-bright-white/70">
+												Designed and developed a modern web presence for a gents
+												salon, enhancing their digital footprint and client
+												outreach.
 											</p>
 										</div>
 									</div>

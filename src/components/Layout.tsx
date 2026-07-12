@@ -31,9 +31,7 @@ function Layout() {
 	return (
 		<div className="bg-grid-pattern flex min-h-screen w-full flex-col overflow-x-hidden bg-primary-bg">
 			<Navbar />
-			<AnimatePresence
-				mode="wait"
-				onExitComplete={() => window.scrollTo(0, 0)}>
+			<AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
 				<motion.div
 					key={location.pathname}
 					initial="initial"
