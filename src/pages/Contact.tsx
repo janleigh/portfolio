@@ -119,7 +119,7 @@ function Contact() {
 								<h3 className="mt-2 text-center font-label-md text-[16px] text-primary-fg transition-colors group-hover:text-bright-cyan">
 									LinkedIn
 								</h3>
-								<p className="text-center text-sm text-[#dfdddd]">janleigh</p>
+								<p className="text-center text-sm text-[#dfdddd]">jnlghmz</p>
 							</motion.a>
 						</motion.div>
 					</motion.div>

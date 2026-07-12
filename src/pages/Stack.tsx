@@ -12,6 +12,10 @@ const STACK_CATEGORIES = [
 				name: "Java / Kotlin",
 				icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
 			},
+			{
+				name: "PHP",
+				icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg",
+			}
 		],
 	},
 	{
@@ -30,14 +34,15 @@ const STACK_CATEGORIES = [
 				name: "Tailwind CSS",
 				icon: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
 			},
-			{ name: "shadcn/ui", icon: "https://cdn.simpleicons.org/shadcnui/white" },
 			{ name: "Bulma", icon: "https://cdn.simpleicons.org/bulma/00D1B2" },
+			{ name: "shadcn/ui", icon: "https://cdn.simpleicons.org/shadcnui/white" },
 		],
 	},
 	{
 		title: "Backend & Database",
 		items: [
 			{ name: "MongoDB", icon: "https://cdn.simpleicons.org/mongodb/47A248" },
+			{ name: "PostgreSQL", icon: "https://cdn.simpleicons.org/postgresql/4169E1" },
 			{ name: "Prisma", icon: "https://cdn.simpleicons.org/prisma/white" },
 			{ name: "Drizzle", icon: "https://cdn.simpleicons.org/drizzle/C5F74F" },
 		],

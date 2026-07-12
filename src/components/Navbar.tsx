@@ -15,6 +15,11 @@ function Navbar() {
 			</div>
 			<div className="hidden gap-8 lg:flex lg:justify-self-center">
 				<Link
+					to="/"
+					className="relative py-4 text-sm text-primary-fg transition-all duration-300 ease-out after:absolute after:bottom-3 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-bright-cyan after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:text-bright-cyan hover:after:scale-x-100">
+					Home
+				</Link>
+				<Link
 					to="/projects"
 					className="relative py-4 text-sm text-primary-fg transition-all duration-300 ease-out after:absolute after:bottom-3 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-bright-cyan after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:text-bright-cyan hover:after:scale-x-100">
 					Projects
