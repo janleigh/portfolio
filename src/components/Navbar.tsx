@@ -15,14 +15,14 @@ function Navbar() {
 				className="flex w-full flex-row items-center justify-between border-b border-[#42474f] bg-normal-black px-4 md:px-8 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center">
 				<div className="flex justify-start lg:justify-self-start">
 					<Link to="/">
-						<span className="inline-block py-4 font-pixel text-primary-fg">
-							<span className="bg-linear-to-r from-preferred-blue via-preferred-pink to-preferred-yellow bg-clip-text text-transparent">
-								janleigh<span className="text-bright-cyan">.is-a.dev</span>
+						<span className="inline-block py-4 font-body tracking-[-0.075em] text-primary-fg">
+							<span className="bg-preferred-blue bg-clip-text text-transparent">
+								janleigh<span className="text-bright-white">.is-a.dev</span>
 							</span>
 						</span>
 					</Link>
 				</div>
-				<div className="hidden gap-8 lg:flex lg:justify-self-center">
+				<div className="hidden gap-8 font-body tracking-[-0.075em] uppercase lg:flex lg:justify-self-center">
 					<Link
 						to="/"
 						className="relative py-4 text-sm text-primary-fg transition-all duration-300 ease-out after:absolute after:bottom-3 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-preferred-blue after:transition-transform after:duration-300 hover:-translate-y-0.5 hover:text-preferred-blue hover:after:scale-x-100">
@@ -104,7 +104,7 @@ function Navbar() {
 				</div>
 			</div>
 			{isOpen && (
-				<div className="absolute top-full left-0 flex w-full flex-col items-center space-y-4 border-b border-[#42474f] bg-[linear-gradient(180deg,rgba(18,19,23,0.98),rgba(12,13,14,0.98))] py-4 shadow-lg lg:hidden">
+				<div className="absolute top-full left-0 flex w-full flex-col items-center space-y-4 border-b border-[#42474f] bg-[linear-gradient(180deg,rgba(18,19,23,0.98),rgba(12,13,14,0.98))] py-4 font-body tracking-[-0.075em] uppercase shadow-lg lg:hidden">
 					<Link
 						to="/"
 						onClick={toggleMenu}

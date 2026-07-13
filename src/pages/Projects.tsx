@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const SHOWCASE_PROJECTS = [
 	"dotfiles",
@@ -72,12 +72,12 @@ function Projects() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.1 }}
 						className="mb-12">
-						<h1 className="font-heading text-[40px] tracking-tighter text-primary-fg md:text-h1">
-							MY (FEATURED) PROJECTS.
+						<h1 className="font-heading text-[40px] tracking-tight text-primary-fg md:text-h1">
+							MY PROJECTS.
 						</h1>
 						<div className="mt-4 flex items-center gap-4">
 							<div className="h-px w-8 bg-bright-cyan"></div>
-							<p className="text-secondary font-mono tracking-widest text-bright-cyan uppercase">
+							<p className="text-secondary font-body tracking-widest text-bright-cyan uppercase">
 								OPEN SOURCE & EXPERIMENTS
 							</p>
 						</div>
@@ -88,7 +88,7 @@ function Projects() {
 							<div className="h-12 w-12 animate-spin rounded-full border-4 border-bright-cyan/20 border-t-bright-cyan"></div>
 						</div>
 					) : error ? (
-						<div className="py-20 text-center font-mono text-normal-red">
+						<div className="py-20 text-center font-body text-normal-red">
 							Error: {error}
 						</div>
 					) : (
@@ -152,7 +152,7 @@ function Projects() {
 												{repo.language && (
 													<div className="flex items-center gap-1.5">
 														<div className="h-2 w-2 rounded-full bg-normal-magenta"></div>
-														<span className="font-mono text-[12px] text-primary-fg/80">
+														<span className="font-body text-[12px] text-primary-fg/80">
 															{repo.language}
 														</span>
 													</div>
@@ -164,7 +164,7 @@ function Projects() {
 														viewBox="0 0 24 24">
 														<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
 													</svg>
-													<span className="font-mono text-[12px] text-primary-fg/80">
+													<span className="font-body text-[12px] text-primary-fg/80">
 														{repo.stargazers_count}
 													</span>
 												</div>
@@ -175,7 +175,7 @@ function Projects() {
 														viewBox="0 0 24 24">
 														<path d="M12 3a2 2 0 0 0-2 2 c0 1.11.89 2 2 2s2-.89 2-2-.89-2-2-2zM4 14a2 2 0 0 0 2-2c0-1.11-.89-2-2-2s-2 .89-2 2 .89 2 2 2zm16 0a2 2 0 0 0 2-2c0-1.11-.89-2-2-2s-2 .89-2 2 .89 2 2 2zM12 9c-1.66 0-3 1.34-3 3v5H7v-2H5v2c0 1.1.9 2 2 2h2v3h2v-3h2v-3h2v2h-2v2h2c1.1 0 2-.9 2-2v-2h-2v-5c0-1.66-1.34-3-3-3z" />
 													</svg>
-													<span className="font-mono text-[12px] text-primary-fg/80">
+													<span className="font-body text-[12px] text-primary-fg/80">
 														{repo.forks_count}
 													</span>
 												</div>

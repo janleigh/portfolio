@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+
 import "./EasterEgg.css";
 
 export default function EasterEgg() {

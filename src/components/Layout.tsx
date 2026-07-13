@@ -1,7 +1,8 @@
-import { useOutlet, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import Navbar from "./Navbar";
+import { useOutlet, useLocation } from "react-router-dom";
+
 import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 const pageVariants = {
 	initial: {

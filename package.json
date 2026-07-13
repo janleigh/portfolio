@@ -1,7 +1,12 @@
 {
 	"name": "portfolio",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"private": true,
+	"license": "MIT",
+	"author": {
+		"name": "Jan Leigh Muñoz",
+		"email": "janleigh@pm.me"
+	},
 	"type": "module",
 	"scripts": {
 		"dev": "vite",

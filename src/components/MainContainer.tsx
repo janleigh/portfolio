@@ -1,13 +1,13 @@
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
 
 const TerminalAnimation = () => {
 	const [text, setText] = useState("");
 	const codeLines = [
 		"janleigh@portfolio ~$ whoami",
-		"janleigh",
+		"> janleigh",
 		"janleigh@portfolio ~$ ./skills --list",
 		"> [React, Node.js, TypeScript, Next.js, Python]",
 		"janleigh@portfolio ~$ status",
@@ -41,11 +41,11 @@ const TerminalAnimation = () => {
 				<div className="h-3 w-3 rounded-full bg-bright-red"></div>
 				<div className="h-3 w-3 rounded-full bg-bright-yellow"></div>
 				<div className="h-3 w-3 rounded-full bg-bright-green"></div>
-				<div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-[#a0a0a0]">
+				<div className="absolute inset-0 flex items-center justify-center font-body text-xs tracking-[-0.075em] text-[#a0a0a0]">
 					janleigh@portfolio : ~
 				</div>
 			</div>
-			<div className="relative z-10 flex h-64 flex-col p-5 font-mono text-sm leading-relaxed sm:text-base">
+			<div className="relative z-10 flex h-64 flex-col p-5 font-body text-sm leading-relaxed tracking-[-0.075em] sm:text-base">
 				{text.split("\n").map((line, i) => {
 					if (line.startsWith("janleigh@portfolio")) {
 						const prompt = "janleigh@portfolio";
@@ -53,13 +53,13 @@ const TerminalAnimation = () => {
 						const promptFull = prompt + symbol;
 						if (line.length <= prompt.length) {
 							return (
-								<div key={i}>
+								<div className="mt-2" key={i}>
 									<span style={{ color: "#23d18b" }}>{line}</span>
 								</div>
 							);
 						} else if (line.length <= promptFull.length) {
 							return (
-								<div key={i}>
+								<div className="mt-2" key={i}>
 									<span style={{ color: "#23d18b" }}>{prompt}</span>
 									<span style={{ color: "#C0CCC0" }}>
 										{line.slice(prompt.length)}
@@ -69,7 +69,7 @@ const TerminalAnimation = () => {
 						} else {
 							const command = line.slice(promptFull.length);
 							return (
-								<div key={i}>
+								<div className="mt-2" key={i}>
 									<span style={{ color: "#23d18b" }}>{prompt}</span>
 									<span style={{ color: "#C0CCC0" }}>{symbol}</span>
 									<span style={{ color: "#F9F1A5" }}>{command}</span>
@@ -92,7 +92,7 @@ const TerminalAnimation = () => {
 						);
 					}
 					return (
-						<div key={i}>
+						<div className="mt-2" key={i}>
 							<span style={{ color: "#C0CCC0" }}>{line}</span>
 						</div>
 					);
@@ -327,7 +327,7 @@ function MainContainer() {
 									hidden: { opacity: 0, y: 20 },
 									show: { opacity: 1, y: 0 },
 								}}
-								className="mb-4 font-mono text-[48px] tracking-tighter text-primary-fg md:text-h1">
+								className="mb-4 font-heading text-[48px] tracking-tight text-primary-fg md:text-h1">
 								JAN LEIGH
 							</motion.h1>
 							<motion.div
@@ -336,7 +336,7 @@ function MainContainer() {
 									show: { opacity: 1, y: 0 },
 								}}
 								className="mb-2 flex items-center gap-4">
-								<p className="text-secondary font-mono tracking-widest text-preferred-purple uppercase italic">
+								<p className="text-secondary font-body tracking-tight text-preferred-purple uppercase">
 									"I build things for the web."
 								</p>
 							</motion.div>
@@ -347,7 +347,7 @@ function MainContainer() {
 								}}
 								className="flex items-center gap-4">
 								<div className="h-px w-8 bg-bright-cyan"></div>
-								<p className="text-secondary font-mono tracking-widest text-bright-cyan uppercase">
+								<p className="text-secondary font-body tracking-tight text-bright-cyan uppercase">
 									CS Undergraduate • Full-Stack Developer • Philippines
 								</p>
 							</motion.div>
@@ -361,7 +361,7 @@ function MainContainer() {
 									<motion.button
 										whileHover={{ y: -5, scale: 1.05 }}
 										whileTap={{ scale: 0.95 }}
-										className="cursor-pointer rounded border border-transparent bg-linear-to-r from-preferred-pink to-preferred-yellow px-8 py-3 font-mono text-normal-black transition-colors duration-300 hover:shadow-[0_12px_30px_rgba(127,200,219,0.35)] hover:shadow-bright-cyan/20">
+										className="cursor-pointer rounded border border-transparent bg-preferred-yellow px-8 py-3 font-body font-bold text-normal-black transition-colors duration-300">
 										[ VIEW MY WORK ]
 									</motion.button>
 								</Link>
@@ -369,7 +369,7 @@ function MainContainer() {
 									<motion.button
 										whileHover={{ y: -5, scale: 1.05 }}
 										whileTap={{ scale: 0.95 }}
-										className="cursor-pointer rounded border border-[#42474f] bg-transparent px-8 py-3 font-mono text-primary-fg transition-colors duration-300 hover:shadow-[0_12px_30px_rgba(127,200,219,0.12)]">
+										className="cursor-pointer rounded border border-[#42474f] bg-transparent px-8 py-3 font-body font-bold text-primary-fg transition-colors duration-300">
 										CONTACT ME
 									</motion.button>
 								</Link>
@@ -390,7 +390,7 @@ function MainContainer() {
 					<motion.span
 						animate={{ y: [0, 10, 0] }}
 						transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
-						className="font-mono text-xs tracking-widest text-bright-white uppercase">
+						className="font-body text-xs tracking-[.2em] text-bright-white uppercase">
 						Scroll to explore
 					</motion.span>
 					<motion.div
@@ -433,14 +433,14 @@ function MainContainer() {
 								show: { opacity: 1, x: 0 },
 							}}
 							className="mx-auto flex w-full max-w-4xl flex-col items-center text-center lg:items-start lg:text-left">
-							<div className="mb-4 inline-block rounded-full border border-bright-cyan/30 bg-bright-cyan/10 px-4 py-1.5 font-mono text-xs tracking-widest text-bright-cyan uppercase">
+							<div className="mb-4 inline-block rounded-full border border-bright-cyan/30 bg-transparent px-4 py-1.5 font-body text-xs tracking-widest text-bright-cyan uppercase">
 								About Me
 							</div>
-							<h2 className="mb-6 font-mono text-4xl tracking-tight text-primary-fg md:text-5xl">
+							<h2 className="mb-6 font-body text-4xl font-bold tracking-wide text-primary-fg md:text-5xl">
 								Hey, I'm Jan Leigh.
 							</h2>
 
-							<div className="flex flex-col gap-6 font-mono leading-relaxed text-bright-white/80">
+							<div className="flex flex-col gap-6 font-body leading-relaxed text-bright-white/80">
 								<p className="text-xl leading-snug font-medium text-bright-white md:text-2xl">
 									Full-stack developer specializing in modern web applications.
 								</p>
@@ -456,13 +456,13 @@ function MainContainer() {
 									<div className="text-3xl font-bold text-bright-green">
 										{getYearOfExperience()}+
 									</div>
-									<div className="font-mono text-sm text-bright-white/80">
+									<div className="font-body text-sm text-bright-white/80">
 										Years of Experience
 									</div>
 								</div>
 								<div className="group flex flex-col gap-2 rounded-xl border border-[#42474f]/50 bg-black/20 p-5 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-bright-cyan/50 hover:shadow-[0_8px_30px_rgba(127,200,219,0.15)]">
 									<div className="text-3xl font-bold text-bright-cyan">CS</div>
-									<div className="font-mono text-sm text-bright-white/80">
+									<div className="font-body text-sm text-bright-white/80">
 										Undergraduate Student
 									</div>
 								</div>
@@ -470,26 +470,26 @@ function MainContainer() {
 									<div className="text-3xl font-bold text-preferred-yellow">
 										OSS
 									</div>
-									<div className="font-mono text-sm text-bright-white/80">
+									<div className="font-body text-sm text-bright-white/80">
 										Active Contributor
 									</div>
 								</div>
 							</div>
 							<div className="mt-16 w-full text-left">
-								<h3 className="mb-8 font-mono text-2xl tracking-tight text-primary-fg">
+								<h3 className="mb-8 font-body text-2xl font-bold tracking-tight text-primary-fg">
 									Experience
 								</h3>
 								<div className="ml-2 flex flex-col gap-8 border-l border-[#42474f]/50 pl-6">
 									<div className="relative">
-										<div className="absolute top-1.5 -left-7.5 h-3 w-3 rounded-full bg-bright-green"></div>
+										<div className="absolute top-2 -left-7.5 h-3 w-3 rounded-full bg-bright-cyan"></div>
 										<div className="flex flex-col gap-1">
-											<h4 className="font-mono text-xl text-bright-white">
+											<h4 className="font-body text-xl font-bold text-bright-white">
 												Mobile App Developer
 											</h4>
-											<span className="font-mono text-base text-bright-white/80">
+											<span className="font-body text-base tracking-tight text-bright-white/80">
 												Thesis Commission (malinaonow) • Freelance
 											</span>
-											<span className="mb-2 font-mono text-sm text-bright-cyan">
+											<span className="mb-2 font-body text-sm text-bright-cyan uppercase">
 												Jul 2025 - Oct 2025 • Remote
 											</span>
 											<p className="text-base leading-relaxed text-bright-white/70">
@@ -500,16 +500,16 @@ function MainContainer() {
 										</div>
 									</div>
 									<div className="relative">
-										<div className="absolute top-1.5 -left-7.5 h-3 w-3 rounded-full bg-[#42474f]"></div>
+										<div className="absolute top-2 -left-7.5 h-3 w-3 rounded-full bg-[#42474f]"></div>
 										<div className="flex flex-col gap-1">
-											<h4 className="font-mono text-xl text-bright-white">
+											<h4 className="font-body text-xl font-bold text-bright-white">
 												Website Developer
 											</h4>
-											<span className="font-mono text-base text-bright-white/80">
+											<span className="font-body text-base tracking-tight text-bright-white/80">
 												Salazar Gents Salon • Freelance
 											</span>
-											<span className="mb-2 font-mono text-sm text-bright-cyan">
-												Nov 2023 - 1 mo • United Arab Emirates (Remote)
+											<span className="mb-2 font-body text-sm text-bright-cyan uppercase">
+												Nov 2023 • United Arab Emirates (Remote)
 											</span>
 											<p className="text-base leading-relaxed text-bright-white/70">
 												Designed and developed a modern web presence for a gents

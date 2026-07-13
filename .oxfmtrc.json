@@ -1,7 +1,9 @@
 {
 	"$schema": "./node_modules/oxfmt/configuration_schema.json",
 	"printWidth": 80,
+	"sortImports": true,
 	"bracketSameLine": true,
+	"sortPackageJson": true,
 	"semi": true,
 	"useTabs": true,
 	"sortTailwindcss": {
