@@ -1,7 +1,9 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import "./index.css";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -47,5 +49,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<RouterProvider router={router} />
+		<Analytics />
+		<SpeedInsights />
 	</StrictMode>,
 );
